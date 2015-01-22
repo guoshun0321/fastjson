@@ -93,6 +93,13 @@ public abstract class JSON implements JSONStreamAware, JSONAware {
         return parse(text, DEFAULT_PARSER_FEATURE);
     }
 
+    /**
+     * 将string解析为JSONObject
+     * 
+     * @param text
+     * @param features
+     * @return
+     */
     public static final Object parse(String text, int features) {
         if (text == null) {
             return null;

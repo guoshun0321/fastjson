@@ -383,6 +383,7 @@ public class DefaultJSONParser extends AbstractJSONParser implements Closeable {
                 }
 
                 Object value;
+                // 处理字符
                 if (ch == '"') {
                     lexer.scanString();
                     String strValue = lexer.stringVal();

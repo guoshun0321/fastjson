@@ -100,6 +100,7 @@ public class JavaBeanDeserializer implements ObjectDeserializer {
             throw new JSONException("create instance error, class " + clazz.getName(), e);
         }
 
+        // 是否将string字段初始化为""
         if (parser.isEnabled(Feature.InitStringFieldAsEmpty)) {
             for (FieldInfo fieldInfo : beanInfo.getFieldList()) {
                 if (fieldInfo.getFieldClass() == String.class) {
@@ -185,6 +186,7 @@ public class JavaBeanDeserializer implements ObjectDeserializer {
         try {
             Map<String, Object> fieldValues = null;
 
+            // 遇到右括号时
             if (lexer.token() == JSONToken.RBRACE) {
                 lexer.nextToken(JSONToken.COMMA);
                 if (object == null) {
@@ -193,6 +195,7 @@ public class JavaBeanDeserializer implements ObjectDeserializer {
                 return (T) object;
             }
 
+            // 解析数组
             if (lexer.token() == JSONToken.LBRACKET && lexer.isEnabled(Feature.SupportArrayToBean)) {
                 return deserialzeArrayMapping(parser, type, fieldName, object);
             }
@@ -218,6 +221,7 @@ public class JavaBeanDeserializer implements ObjectDeserializer {
 
             for (;;) {
 
+            	// 解析key
                 String key = lexer.scanSymbol(parser.getSymbolTable());
 
                 if (key == null) {
@@ -232,6 +236,7 @@ public class JavaBeanDeserializer implements ObjectDeserializer {
                     }
                 }
 
+                // 解析引用
                 if ("$ref" == key) {
                     lexer.nextTokenWithColon(JSONToken.LITERAL_STRING);
                     if (lexer.token() == JSONToken.LITERAL_STRING) {
@@ -277,6 +282,7 @@ public class JavaBeanDeserializer implements ObjectDeserializer {
                     return (T) object;
                 }
 
+                // @type
                 if (JSON.DEFAULT_TYPE_KEY == key) {
                     lexer.nextTokenWithColon(JSONToken.LITERAL_STRING);
                     if (lexer.token() == JSONToken.LITERAL_STRING) {
@@ -299,6 +305,7 @@ public class JavaBeanDeserializer implements ObjectDeserializer {
                     }
                 }
 
+                // 新建对象，并将对象加入到上下文
                 if (object == null && fieldValues == null) {
                     object = createInstance(parser, type);
                     if (object == null) {

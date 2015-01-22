@@ -59,6 +59,9 @@ public final class JSONScanner extends JSONLexerBase {
         return text.charAt(index);
     }
 
+    /**
+     * 获取下一个字符
+     */
     public final char next() {
         return ch = charAt(++bp);
     }

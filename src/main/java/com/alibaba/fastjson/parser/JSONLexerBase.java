@@ -53,6 +53,9 @@ public abstract class JSONLexerBase implements JSONLexer, Closeable {
     protected int                                           features       = JSON.DEFAULT_PARSER_FEATURE;
 
     protected char                                          ch;
+    /**
+     * 当前指针位置
+     */
     protected int                                           bp;
 
     protected int                                           eofPos;
